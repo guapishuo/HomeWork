@@ -1,4 +1,4 @@
-###第一种方法 用union连接方法 
+### 第一种方法 用union连接方法  
     create table lagou_city as
             select
                    d.id,    -                   -省市区编号id
@@ -19,19 +19,19 @@
                  (select * from s_provinces where depth=2) c
           join s_provinces p on c.parentId = p.id and p.depth = 1;
     
-###第二种分布创建
-####首先把一些基本的，好筛选出来的数据，先提取出来放到我们创建的表里        
+### 第二种分布创建
+#### 首先把一些基本的，好筛选出来的数据，先提取出来放到我们创建的表里        
        create table lagou_city01 as
        select d.id, p.cityName as province, c.cityName as city, d.cityName as district from
          (select * from china_city where depth=3) d
            join china_city c on d.parentId = c.id and c.depth=2
            join china_city p on c.parentId = p.id and p.depth=1;
-####先可以把所有‘省，市，县’都有数据的行，从s_provinces中提取到 lagou_city表中，之后我们再把那些县为null的行数添加进去，       
+#### 先可以把所有‘省，市，县’都有数据的行，从s_provinces中提取到 lagou_city表中，之后我们再把那些县为null的行数添加进去，        
        insert into lagou_city01
        select c.id, p.cityName as province, c.cityName as city, null as district from (select * from china_city where depth=2) c
          join china_city p on c.parentId = p.id and p.depth = 1;
        
-###我认为第二种方法比较简便，先筛选好数据，然后创建数据库，最后再给出要添加的内容的条件添加进去。
+### 我认为第二种方法比较简便，先筛选好数据，然后创建数据库，最后再给出要添加的内容的条件添加进去。
 
 
 
