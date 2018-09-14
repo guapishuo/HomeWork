@@ -9,4 +9,15 @@
     select s.id,p.cityName,s.cityName,null from s_provinces s --查询s_provinces表中市的id，省名，市名，区为null的值
         join s_provinces p on  s.parentId = p.id    
     where p.cityName = '广东省';
+
+#### join on查询出给定条件的数据
+#### left jion 左外链接  例: 省表id与市表id相关联，如果市表没有相关联的省市数据则对应null；
     
+	广东省   ----- 珠海市,广州市
+	广西省   ----- null
+	
+#### right jion 右外链接 与左外链接刚好相反
+
+	广东省   ----- 珠海市,广州市
+	广西省   ----- null
+	null       ----- 南昌市			
